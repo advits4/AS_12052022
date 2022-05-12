@@ -15,7 +15,7 @@ To start the frontend switch to the react-website folder and use the following c
 npm start
 ```
 
-The backend server host is coded as "http://127.0.0.1:8000/" in the react code (Change if necessary). Make sure the application has proper write/create access to create the "storage" folder.
+The backend server host is coded as "http://127.0.0.1:8000/" in the react code (Change in the code if necessary). Make sure the application has proper write/create access to create the "storage" folder.
 
 ## Project walkthrough
 In this module you shall be able to do the following:
