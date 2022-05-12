@@ -4,7 +4,7 @@ This is a small project created in python and react. It is a simple project wher
 
 ## Starting the application
 
-To start the backend server use following command in the root folder containing main.py
+Ideal environment to run this application would be by using uvicorn and npm. To start the backend server use following command in the root folder containing main.py
 
 ```bash
 uvicorn main:app --reload  
@@ -14,6 +14,8 @@ To start the frontend switch to the react-website folder and use the following c
 ```bash
 npm start
 ```
+
+Read about how to install uvicorn [here](https://www.uvicorn.org). Install npm if not already available, learn about it [here](https://nodejs.org/en/download/package-manager/)
 
 The backend server host is coded as "http://127.0.0.1:8000/" in the react code (Change in the code if necessary). Make sure the application has proper write/create access to create the "storage" folder.
 
