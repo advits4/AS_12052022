@@ -2,7 +2,6 @@ import React from "react";
 import cookie from 'react-cookies';
 
 class List extends React.Component {
-
 	constructor(props) {
 		super(props);
 
@@ -16,8 +15,9 @@ class List extends React.Component {
 	// ComponentDidMount is used to
 	// execute the code
 	componentDidMount() {
+        const host = 'http://127.0.0.1:8000/';
 		fetch(
-            "http://127.0.0.1:8000/get?uuid=" + cookie.load('userId')
+            host + "get?uuid=" + cookie.load('userId')
         
         )
         .then((res) => res.json())
@@ -30,21 +30,22 @@ class List extends React.Component {
 	}
 	render() {
 		const { isLoaded, items } = this.state;
-		if (!isLoaded) return <div>
-			<h1> Please wait loading data.... </h1> </div> ;
+		if (!isLoaded) return 
+            <p>Please wait loading data....</p> ;
 
 		return (
 		<div className = "App">
-            <div class="container pt-3">
+            <div className="container pt-3">
                 <h1> List of cards added </h1>
-                <div class="row">
-                    <div class="col-sm">
+
+                <div className="row">
+                    <div className="col-sm">
                         <h4>Bank Name</h4>
                     </div>
-                    <div class="col-sm">
+                    <div className="col-sm">
                         <h4>Card Number</h4>
                     </div>
-                    <div class="col-sm">
+                    <div className="col-sm">
                         <h4>Expiry Date</h4>
                     </div>
                 </div>
@@ -52,19 +53,19 @@ class List extends React.Component {
                 {
                     Object.keys(items).length > 0 ? 
                     Object.keys(items).map((item) => (
-                        <div class="row">
-                            <div class="col-sm">
+                        <div className="row" key={item}>
+                            <div className="col-sm">
                                 { items[item].bank_name }
                             </div>
-                            <div class="col-sm">
+                            <div className="col-sm">
                                 { items[item].mask_card_number }
                             </div>
-                            <div class="col-sm text-capitalize">
+                            <div className="col-sm text-capitalize">
                                 { items[item].expiry }
                             </div>
                         </div>
                     )) : (
-                        <div class="row text-center mt-3">
+                        <div className="row text-center mt-3">
                             <div>
                             No cards added
                             </div>

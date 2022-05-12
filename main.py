@@ -38,16 +38,6 @@ class Card(BaseModel):
 
 file_name = 'store.txt'
 
-#adding a custom handler to standarise the exception json output
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc):
-    #for the sake of simplicity of this task, just showing the first error with exc.errors()[0]['msg']
-    # if exc.errors()[0]['loc'][1] is not null:
-    #     # return getResultJson(0, 'Invalid ' + exc.errors()[0]['loc'][1] + ': ' + exc.errors()[0]['msg'])
-    #     return getResultJson(0, 'Invalid ', exc.errors()[0]['loc'])
-    return getResultJson(0, exc.errors()[0]['msg'])
-
-
 @app.get("/get")
 async def doGet(uuid: str):
     try:
@@ -89,13 +79,8 @@ async def create_upload_file(file: UploadFile, uuid: str):
         result = 0
         message = str(e)
         exc_type, exc_obj, exc_tb = sys.exc_info()
-        data = exc_tb.tb_lineno
+        data = {exc_type, exc_obj, exc_tb}
     return getResultJson(result, message, data)
-
-@app.get("/clear")
-async def clear():
-    data = clearFiles()
-    return getResultJson(1, 'message', data)
 
 @app.post("/store")
 async def doStore(card: Card):
@@ -122,9 +107,23 @@ async def doStore(card: Card):
         result = 0
         message = str(e)
         exc_type, exc_obj, exc_tb = sys.exc_info()
-        data = exc_tb.tb_lineno
+        data = {exc_type, exc_obj, exc_tb}
     return getResultJson(result, message, data)
 
+@app.get("/clear")
+# this is an api I built to clear the temp files. As we store the cards in a temp file under the storage folder
+async def clear():
+    data = clearFiles()
+    return getResultJson(1, 'message', data)
+
+#adding a custom handler to standarise the exception json output
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    #for the sake of simplicity of this task, just showing the first error with exc.errors()[0]['msg']
+    return getResultJson(0, exc.errors()[0]['msg'])
+
+
+# this function is added to do some basic validations on the input fields before storing
 def validateRow(bank, card, expiry):
     bankPat = "(.|\s)*\S(.|\s)*"
     if not re.fullmatch(bankPat, bank):
@@ -140,7 +139,7 @@ def validateRow(bank, card, expiry):
     return [True, '']
 
 # since we create temp session files to store user data 
-# we will periodically delete those files
+# we will periodically delete those files using this function
 def clearFiles():
     path = os.path.abspath('storage')
     if not os.path.isdir(path):
@@ -151,19 +150,15 @@ def clearFiles():
     for filename in list_of_files:
         filePath = path + os.path.sep + filename
         modified_time=os.path.getmtime(filePath)
-        if time.time()-modified_time > 1800: #time in seconds
+        if time.time() - modified_time > 1800: #time in seconds for 30 mins. Usually this value would go in an env file
             os.remove(filePath)
-
     return data            
 
 def getFileName(uuid):
     return 'storage/' + uuid if uuid else file_name
 
-def processCardValidations(bank, card_number, expiry_date):
-    return False
-
-def processCardDetails(bank, card_number, expiry_date):
-    bank = bank
+def processCardDetails(bank_name, card_number, expiry_date):
+    bank = bank_name
     cardNo = card_number
     masked = re.sub("[0-9](?<=.{5})", 'x', cardNo)
     expiry = expiry_date
@@ -182,12 +177,11 @@ def processCardDetails(bank, card_number, expiry_date):
 # this function is responsible for sorting the card details as per the expiry in descending order
 def sortDict(dictList, reverse = True):
     sortedList = []
-    # for value in sorted(dictList, key=lambda d: d['expiry_stamp'], reverse = reverse) :
-    for value in sorted(dictList, key=itemgetter('expiry_stamp'), reverse = reverse) :    #itemgetter('name')) 
+    for value in sorted(dictList, key=itemgetter('expiry_stamp'), reverse = reverse) :
         sortedList.append(value)
     return sortedList    
 
-# read a dictionary from the file storage, as we store data in the form of list of dictionaries
+# read a list of dictionary from the file storage, as we store data in an temp file
 def readDataFromFile(fileName):
     fileName = Path(fileName)
     listOfDict = []
@@ -197,7 +191,7 @@ def readDataFromFile(fileName):
             listOfDict = json.loads(data)
     return listOfDict
 
-# write a list of dictionary to the file storage since we store data in the form of list of dictionaries
+# write a list of dictionary to the file storage
 def writeDataToFile(fileName, dictList):
     with open(fileName, 'w') as convert_file:
         convert_file.write(json.dumps(dictList))   

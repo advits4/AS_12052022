@@ -10,7 +10,6 @@ import cookie from 'react-cookies'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const uuid = cookie.load('userId') ? cookie.load('userId') : uuidv4();
-console.log("'userId', uuidv4(), { path: '/' } " + uuid);
 cookie.save('userId', uuid, { path: '/' });
 root.render(
   <React.StrictMode>
