@@ -15,7 +15,7 @@ To start the frontend switch to the react-website folder and use the following c
 npm start
 ```
 
-Read about how to install uvicorn [here](https://www.uvicorn.org). Install npm if not already available, learn about it [here](https://nodejs.org/en/download/package-manager/)
+Read about how to install uvicorn [here](https://www.uvicorn.org). Install npm if not already available, learn about it [here](https://nodejs.org/en/download/package-manager/).
 
 The backend server host is coded as "http://127.0.0.1:8000/" in the react code (Change in the code if necessary). Make sure the application has proper write/create access to create the "storage" folder.
 
@@ -42,7 +42,9 @@ This is where you can access all the cards that you have added either manually o
 
 ### Miscellaneous
 The information is added by the user maintained for a max period of 30 mins.
-Additional screenshots can be found at "/react-website/public/screenshots/"
+Additional screenshots can be found at "/react-website/public/screenshots/".
+If you face npm based issues on "npm start", you can delete the "node_modules" and run "npm install" and then run "npm start" again.
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
