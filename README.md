@@ -31,7 +31,7 @@ You shall be able to add a card using the Add module. While adding a card please
 Add rest of the details like Bank name and expiry details. On successful addition you shall be presented with a success alert.
 
 ### Upload cards
-In this section you shall be able to upload a csv file, a sample csv can be found here. Please note that the csv format should be as below, failing to do so you shall get an error message and the upload will fail.
+In this section you shall be able to upload a csv file, a sample csv can be found [here](sociotech/react-website/public/cards.csv). Please note that the csv format should be as below, failing to do so you shall get an error message and the upload will fail.
 ![Alt text](/react-website/public/screenshots/csv-sample.png?raw=true "")
 
 ### List cards
