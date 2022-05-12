@@ -15,7 +15,7 @@ To start the frontend switch to the react-website folder and use the following c
 npm start
 ```
 
-The backend server host is coded as "http://127.0.0.1:8000/" in the react code (Change if necessary).
+The backend server host is coded as "http://127.0.0.1:8000/" in the react code (Change if necessary). Make sure the application has proper write/create access to create the "storage" folder.
 
 ## Project walkthrough
 In this module you shall be able to do the following:
@@ -31,7 +31,7 @@ You shall be able to add a card using the Add module. While adding a card please
 Add rest of the details like Bank name and expiry details. On successful addition you shall be presented with a success alert.
 
 ### Upload cards
-In this section you shall be able to upload a csv file, a sample csv can be found here. Please note that the csv format should be as below, failing to do so you shall get an error message and the upload will fail.
+In this section you shall be able to upload a csv file, a sample csv can be found [here](https://github.com/advits4/sociotech/blob/main/react-website/public/cards.csv). Please note that the csv format should be as below, failing to do so you shall get an error message and the upload will fail.
 ![Alt text](/react-website/public/screenshots/csv-sample.png?raw=true "")
 
 ### List cards

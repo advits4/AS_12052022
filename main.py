@@ -183,6 +183,8 @@ def sortDict(dictList, reverse = True):
 
 # read a list of dictionary from the file storage, as we store data in an temp file
 def readDataFromFile(fileName):
+    if not os.path.exists('storage'):
+        os.makedirs('storage')
     fileName = Path(fileName)
     listOfDict = []
     if fileName.exists():
@@ -193,6 +195,8 @@ def readDataFromFile(fileName):
 
 # write a list of dictionary to the file storage
 def writeDataToFile(fileName, dictList):
+    if not os.path.exists('storage'):
+        os.makedirs('storage')
     with open(fileName, 'w') as convert_file:
         convert_file.write(json.dumps(dictList))   
 
@@ -201,3 +205,4 @@ def getResultJson(result, message, data=''):
     return JSONResponse(
         content=jsonable_encoder({"result": result, "message": message, "data": data}),
     )
+

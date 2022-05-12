@@ -47,14 +47,7 @@ const Add = () => {
             </h1>
             <form onSubmit={handleSubmit}>
                 {submitting &&
-                    <div>Submitting Form...
-                        You are submitting the following:
-                        <ul>
-                            {Object.entries(formData).map(([name, value]) => (
-                                <li key={name}><strong>{name}</strong>:{value.toString()}</li>
-                            ))}
-                        </ul>
-                    </div>
+                    <div>Submitting Form...</div>
                 }
                 {alert &&
                     <div className="alert alert-success" role="alert">
